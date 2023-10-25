@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: true,
     serverRuntimeConfig: {
-        connectionString: "mongodb://localhost/next-js-registration-login-example",
+        connectionString: "mongodb://127.0.0.1/next-js-registration-login-example",
         secret: 'THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING'
     },
     publicRuntimeConfig: {

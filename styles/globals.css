@@ -1,3 +1,62 @@
 .app-container {
     min-height: 350px;
 }
+
+.header-title {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.side-bar {
+    list-style-type: none;
+    padding: 12px 0px;
+    border-radius: 6px;
+    box-shadow: 1px 2px 2px 1px rgba(0,0,0,0.5);
+}
+
+.side-bar > .side-bar-item {
+    padding: 4px 12px;
+    transition: background-color .3s;
+    font-size: 20px;
+}
+.side-bar > .side-bar-item.active-item {
+    background-color: #444;
+    color: #FFF;
+}
+
+.side-bar > .side-bar-item:hover {
+    cursor: pointer;
+    background-color: #CCC;
+}
+
+.addCategory-container {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.main-content {
+    margin-top: 32px;
+}
+
+.deleteBtn {
+    margin-left: 8px;
+}
+
+.btn-category {
+    text-decoration: none;
+}
+
+.btn-category:hover {
+    cursor: pointer;
+}
+
+.category-section {
+    margin-bottom: 12px;
+}
+
+.image-item {
+    margin-bottom: 12px;
+}

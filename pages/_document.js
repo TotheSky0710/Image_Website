@@ -17,10 +17,7 @@ function Document() {
                 {/* credits */}
                 <div className="text-center mt-4">
                     <p>
-                        <a href="https://jasonwatmore.com/next-js-13-mongodb-user-registration-and-login-tutorial-with-example-app" target="_top">Next.js 13 + MongoDB - User Registration and Login Tutorial with Example App</a>
-                    </p>
-                    <p>
-                        <a href="https://jasonwatmore.com" target="_top">JasonWatmore.com</a>
+                        <a href="#" target="_top">Next.js 13 + MongoDB - Image Website</a>
                     </p>
                 </div>
             </body>
