@@ -28,7 +28,7 @@ function Login() {
         return userService.login(username, password)
             .then(() => {
                 // get return url from query parameters or default to '/'
-                const returnUrl = router.query.returnUrl || '/';
+                const returnUrl = router.query.returnUrl || '/admin/categories';
                 router.push(returnUrl);
             })
             .catch(alertService.error);
@@ -54,7 +54,6 @@ function Login() {
                             {formState.isSubmitting && <span className="spinner-border spinner-border-sm me-1"></span>}
                             Login
                         </button>
-                        <Link href="/account/register" className="btn btn-link">Register</Link>
                     </form>
                 </div>
             </div>

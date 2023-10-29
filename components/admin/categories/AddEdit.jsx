@@ -18,15 +18,18 @@ function AddEdit(props) {
         categorySlug: '',
         imgContent: ''
     });
+    const [imagePath, setImagePath] = useState('');
 
     useEffect(() => {
-        if(category)
+        if(category) {
             setSubmitData({
                 categoryName: category.categoryName,
                 categorySlug: category.categorySlug,
                 imgContent: category.imgContent
             });
-    }, [category])
+            setImagePath(`/api/images${category.imgContent}`);
+        }
+    }, [category]);
 
     const toBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -47,6 +50,8 @@ function AddEdit(props) {
             const base64Img = await toBase64(i);
             setSubmitData({...submitData, imgContent: base64Img});
             //setCreateObjectURL(URL.createObjectURL(i));
+            setImagePath(base64Img);
+
         }
     }
 
@@ -99,36 +104,6 @@ function AddEdit(props) {
     const { register, handleSubmit, reset, formState } = useForm(formOptions);
     const { errors } = formState;
 
-    // async function onSubmit(data) {
-    //     alertService.clear();
-        
-    //     const formData = new FormData();
-    //     formData.append("categoryName", data.categoryName);
-    //     formData.append("categorySlug", data.categorySlug);
-    //     formData.set("imgContent", data.imgContent);
-        
-    //     try {
-    //         // create or update user based on user prop
-    //         let message;
-            
-    //         if (category) {
-    //             await categoryService.update(category.id, formData);
-    //             message = 'Category updated';
-    //         } else {
-    //             await categoryService.add(formData);
-    //             message = 'Category added';
-    //         }
-            
-    //         // redirect to user list with success message
-    //         router.push('/admin/categories');
-    //         alertService.success(message, true);
-    //     } catch (error) {
-    //         alertService.error(error);
-    //         console.error(error);
-    //     }
-        
-    // }
-//<form onSubmit={handleSubmit(onSubmit)}>
     return (
         <form>
             <div className="mb-3">
@@ -148,7 +123,7 @@ function AddEdit(props) {
             <div className="mb-3">
                 <label className="form-label">Image</label>
                 <input name="imgPath" type="file" {...register('imgPath')} className={`form-control ${errors.imgPath ? 'is-invalid' : ''}`} onChange={uploadToClient} />
-                <img src={submitData.imgContent} width='150px' />
+                <img src={imagePath} width='100%' loading='lazy'/> 
                 <div className="invalid-feedback">{errors.imgPath?.message}</div>
             </div>
             <div className="mb-3">

@@ -5,6 +5,10 @@
 .header-title {
     float: left;
 }
+.header-title.center {
+    width: 100%;
+    text-align: center;
+}
 
 .float-right {
     float: right;
@@ -41,8 +45,16 @@
     margin-top: 32px;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
+.editBtn {
+    margin-right: 8px;
+}
+
 .deleteBtn {
-    margin-left: 8px;
+    color: #F00;
 }
 
 .btn-category {
@@ -59,4 +71,98 @@
 
 .image-item {
     margin-bottom: 12px;
+}
+
+.search-wrapper {
+    width: 50%;
+    margin: 0 auto;
+}
+.category-list-wrapper {
+    margin: 12px auto;
+    text-align: center;
+}
+.category-list-wrapper .category-list-item {
+    border-radius: 24px;
+    border: 0px;
+    padding: 4px 8px;
+    font-size: 16px;
+    margin: 4px;
+    box-shadow: 1px 2px 2px 1px rgba(0,0,0,0.5);
+    transition: .1s;
+}
+.category-list-wrapper .category-list-item.active-item {
+    background-color: #333;
+    color: #FFF;
+}
+.category-list-wrapper .category-list-item:hover {
+    box-shadow: 2px 4px 4px 2px rgba(0,0,0,0.3);
+}
+
+.masonry-item {
+    margin: 16px 0;
+    transition: .1s;
+}
+
+.masonry-item:hover {
+    cursor: pointer;
+    margin: 16px 4px;
+}
+
+.masonry-item img {
+    width: 100%;
+    border: 1px solid #000;
+    border-radius: 6px;
+}
+
+.masonry-item h4,
+.masonry-item h5 {
+    margin: 0;
+}
+
+.detail-image-wrapper {
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #EEE;
+    border: 2px solid #000;
+}
+
+.detail-desc-wrapper {
+    padding: 24px 48px 0 48px;
+}
+
+.shared-link-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.shared-link-list > li {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.shared-link-list > li > a {
+    text-decoration: none;
+}
+
+.category-item:hover {
+    cursor:pointer;
+}
+.category-page-header-wrapper{
+    position: relative;
+    width: 100%;
+    height: 120px;
+    text-align: center;
+}
+.category-page-header {
+    width: 100%;
+    height: 120px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+}
+.category-page-header-wrapper h1 {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

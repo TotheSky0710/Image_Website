@@ -32,12 +32,36 @@ function App({ Component, pageProps }) {
         }
     }, []);
 
+    function publicPathCheck(curPath, publicPaths) {
+        if (publicPaths.includes(curPath)) return true;
+
+        let isPublicPath = false;
+
+        for (const path of publicPaths) {
+            const regexPattern = new RegExp('^' + path.replace('[id]', '\\w+') + '$');
+            if (regexPattern.test(curPath)) {
+                isPublicPath = true;
+                break;
+            }
+        }
+        return isPublicPath;
+    }
+
     function authCheck(url) {
         // redirect to login page if accessing a private page and not logged in 
         setUser(userService.userValue);
-        const publicPaths = ['/account/login', '/account/register'];
+        const publicPaths = [
+            '/account/login',
+            '/account/register',
+            '/images/[id]',
+            '/categories',
+            '/categories/details/[id]', 
+            '/about',
+            '/contact',
+            '/',
+        ];
         const path = url.split('?')[0];
-        if (!userService.userValue && !publicPaths.includes(path)) {
+        if (!userService.userValue && !publicPathCheck(path, publicPaths)) {
             setAuthorized(false);
             router.push({
                 pathname: '/account/login',

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 import { ImageAddModal } from 'components/admin/images';
 import { Layout } from 'components/admin';
@@ -10,6 +11,13 @@ function Index() {
     const [images, setImages] = useState([]);
     const [categories, setCategories] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    
+    const [submitData, setSubmitData] = useState({
+        imageName: '',
+        imageAltTag: '',
+        imgContent: '',
+        category: ''
+    });
 
     useEffect(() => {
         categoryService.getAll()
@@ -24,22 +32,36 @@ function Index() {
             .catch(alertService.error);
     }, []);
 
-    const saveImageData = async (data) => {
+    const saveImageData = async () => {
         try {
             let message;
             let response;
 
-            response = await imageService.add(data);
+            response = await imageService.add(submitData);
             imageService.getAll().then(x => {setImages(x)});
 
             message = 'Image added!';
             alertService.success(message, true);
+            setSubmitData({...setSubmitData, imgContent: ''});
         } catch (error) {
             alertService.error(error);
-            console.error(error);
+            setSubmitData({...setSubmitData, imgContent: ''});
         };
         setIsModalOpen(false);
     }
+
+    const deleteImage = (id) => {
+        imageService.delete(id)
+            .then(() => {
+                setImages(images => images.filter(x => x.id !== id));
+            });
+
+    }
+
+    const getImageContent = async (fileName) => {
+        return await imageService.getContent();
+    }
+
 
     return (
         <Layout>
@@ -52,14 +74,15 @@ function Index() {
                 {
                     images.map((image, index) => (
                         <div className='col-md-3 image-item' key={image.imageName} >
-                            <img src={image.imgContent} width="100%"/>
+                            <img src={`/api/images${image.imgContent}`} width='100%' loading='lazy'/> 
                             <h3>{image.imageName}</h3>
                             <h4>{image.category ? image.category.categoryName : "Category doesn't exist"}</h4>
+                            <a className="btn-image deleteBtn" onClick={ () => deleteImage(image.id) }>Delete</a>
                         </div>
                     ))
                 }
             </div>
-            <ImageAddModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} onClickSave={saveImageData} categories={categories} /> 
+            <ImageAddModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} onClickSave={saveImageData} categories={categories} submitData={submitData} setSubmitData={setSubmitData} /> 
         </Layout>
     );
 }

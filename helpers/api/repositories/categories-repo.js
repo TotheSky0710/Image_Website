@@ -1,9 +1,10 @@
-import { db } from 'helpers/api';
+import { db, base64ToFile } from 'helpers/api';
 
 const Category = db.Category;
 
 export const categoriesRepo = {
     getAll,
+    getAllWithImageCounts,
     getById,
     create,
     update,
@@ -14,6 +15,29 @@ async function getAll() {
     return await Category.find();
 }
 
+async function getAllWithImageCounts() {
+    const response = await Category.aggregate([
+        {
+            $lookup: {
+                from: 'images', // The name of the image collection
+                localField: '_id',
+                foreignField: 'category',
+                as: 'imageCount'
+            }
+        },
+        {
+            $project: {
+                _id: 1,
+                categoryName: 1,
+                categorySlug: 1,
+                imgContent: 1,
+                imageCount: { $size: '$imageCount' }
+            }
+        }
+    ]);
+    return response;
+}
+
 async function getById(id) {
     return await Category.findById(id);
 }
@@ -21,10 +45,15 @@ async function getById(id) {
 async function create(params) {
     // validate
     if (await Category.findOne({ categoryName: params.categoryName })) {
-        throw 'Username "' + params.categoryName + '" is already taken';
+        throw 'Category Name "' + params.categoryName + '" is already taken';
     }
 
-    const category = new Category(params);
+    const path = base64ToFile(params.imgContent);
+    const category = new Category({
+        categoryName: params.categoryName,
+        categorySlug: params.categorySlug,
+        imgContent: path
+    });
 
     // save user
     await category.save();
@@ -40,7 +69,13 @@ async function update(id, params) {
     }
 
     // copy params properties to user
-    Object.assign(category, params);
+    const path = base64ToFile(params.imgContent);
+    const updatedCategory = {
+        categoryName: params.categoryName,
+        categorySlug: params.categorySlug,
+        imgContent: path
+    }
+    Object.assign(category, updatedCategory);
     await category.save();
 }
 

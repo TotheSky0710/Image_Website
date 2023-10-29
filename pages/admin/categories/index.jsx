@@ -52,38 +52,43 @@ function Index() {
             <Link href="/admin/categories/add" className="btn btn-sm btn-success mb-2 mt-2 float-right">Add New</Link>
             <div className='clearfix'></div>
             <div className='main-content row'>
-                <div className='hidden-sm col-md-3'>
-                    <ul className='side-bar'>
-                        {
-                            categories.map((category, index) => (
-                                <li className={`side-bar-item ${category._id === activeCategory._id ? 'active-item' : ''}`} key={category.categoryName} onClick={() => changeActiveCategory(category._id)}>{category.categoryName}</li>
-                            ))
-                        }
-                    </ul>
-                </div>
-                <div className='col-md-9'>
-                    <div className='row category-section'>
-                        <div className='col-md-8'>
-                            <img src={activeCategory.imgContent} style={{width:'100%'}}/>
+                {
+                Object.keys(activeCategory).length ?
+                    <>
+                        <div className='hidden-sm col-md-3'>
+                            <ul className='side-bar'>
+                                {
+                                    categories.map((category, index) => (
+                                        <li className={`side-bar-item ${category._id === activeCategory._id ? 'active-item' : ''}`} key={category.categoryName} onClick={() => changeActiveCategory(category._id)}>{category.categoryName}</li>
+                                    ))
+                                }
+                            </ul>
                         </div>
-                        <div className='col-md-4'>
-                            <h2>{activeCategory.categoryName}</h2>
-                            <p>Total Images: <b>{activeImages.length}</b></p>
-                            <Link href={`/admin/categories/edit/${activeCategory._id}`} className="btn-category">Edit</Link>
-                            <a className="btn-category deleteBtn" onClick={ () => deleteCategory(activeCategory._id) }>Delete</a>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        {
-                            activeImages.map((image, index) => (
-                                <div className='col-md-3 image-item' key={image.imageName} >
-                                    <img src={image.imgContent} width="100%"/>
-                                    <h3>{image.imageName}</h3>
+                        <div className='col-md-9'>
+                            <div className='row category-section'>
+                                <div className='col-md-8'>
+                                    <img src={`/api/images${activeCategory.imgContent}`} width='100%' loading='lazy'/> 
                                 </div>
-                            ))
-                        }
-                    </div>
-                </div>
+                                <div className='col-md-4'>
+                                    <h2>{activeCategory.categoryName}</h2>
+                                    <p>Total Images: <b>{activeImages.length}</b></p>
+                                    <Link href={`/admin/categories/edit/${activeCategory._id}`} className="btn-category editBtn">Edit</Link>
+                                    <a className="btn-category deleteBtn" onClick={ () => deleteCategory(activeCategory._id) }>Delete</a>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                {
+                                    activeImages.map((image, index) => (
+                                        <div className='col-md-3 image-item' key={image.imageName} >
+                                            <img src={`/api/images${image.imgContent}`} width='100%' loading='lazy'/> 
+                                            <h3>{image.imageName}</h3>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </> : '' 
+                }
             </div>
         </Layout>
     );

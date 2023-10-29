@@ -7,11 +7,11 @@ export default apiHandler({
 });
 
 async function getById(req, res) {
-    const user = await categoriesRepo.getById(req.query.id);
+    const category = await categoriesRepo.getById(req.query.id);
 
-    if (!user) throw 'User Not Found';
+    if (!category) throw 'Category Not Found';
 
-    return res.status(200).json(user);
+    return res.status(200).json(category);
 }
 
 async function update(req, res) {
@@ -27,7 +27,7 @@ async function _delete(req, res) {
 export const config = {
     api: {
         bodyParser: {
-            sizeLimit: '10mb',
+            sizeLimit: '50mb',
         },
     },
 }

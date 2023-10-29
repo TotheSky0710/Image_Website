@@ -1,7 +1,7 @@
 import getConfig from 'next/config';
 import mongoose from 'mongoose';
 
-import { User, Category, Image } from '../../models';
+import { User, Category, Image, Message } from '../../models';
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -11,5 +11,6 @@ mongoose.Promise = global.Promise;
 export const db = {
     User,
     Category,
-    Image
+    Image,
+    Message
 };

@@ -12,7 +12,7 @@ async function add(req, res) {
 export const config = {
     api: {
         bodyParser: {
-            sizeLimit: '10mb',
+            sizeLimit: '50mb',
         },
     },
 }

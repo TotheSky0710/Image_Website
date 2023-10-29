@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -6,12 +6,11 @@ const ImageAddModal = (props) => {
 
     const { categories }= props;
 
-    const [submitData, setSubmitData] = useState({
-        imageName: '',
-        imageAltTag: '',
-        imgContent: '',
-        category: ''
-    });
+    const {submitData, setSubmitData} = props;
+
+    useEffect(() => {
+        console.log(submitData.imgContent);
+    },[]);
 
     const toBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -36,7 +35,7 @@ const ImageAddModal = (props) => {
 
     return (
         <>
-            <Modal show={props.isModalOpen} onHide={() => props.setIsModalOpen(false)}>
+            <Modal show={props.isModalOpen} onHide={() => {props.setIsModalOpen(false);setSubmitData({...submitData, imgContent:''})}}>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         Add Image
